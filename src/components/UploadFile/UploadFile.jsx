@@ -17,7 +17,7 @@ import ListFiles from "../ListFiles/ListFiles";
 
 export function UploadFile() {
   const [file, setFile] = useState(null);
-  const [isUploaded, setIsUploaded] = useState(false);
+  const [isUploadedAt, setIsUploaded] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -41,6 +41,7 @@ export function UploadFile() {
     });
     const jsonResponse = await response.json();
     setIsLoading(false);
+    setIsUploaded(new Date());
     console.log("Response: ", jsonResponse);
   };
 
@@ -92,7 +93,7 @@ export function UploadFile() {
             </Button>
           )}
         </form>
-        <ListFiles />
+        {isUploadedAt && <ListFiles uploadTime={isUploadedAt} />}
       </div>
       <Dialog open={errorModalOpen} onOpenChange={setErrorModalOpen}>
         <DialogContent className="sm:max-w-md">
